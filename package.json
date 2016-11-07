@@ -5,14 +5,21 @@
   "description": "RedBooth Test task",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
+    "dev": "webpack-dev-server --progress --profile --colors",
+    "server": "node server/index.js",
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
-    "start": "webpack-dev-server --progress --profile --colors",
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register ./app/**/*-test.js",
     "test:lint": "./node_modules/.bin/eslint ./app/"
   },
   "author": "Aleksey Dmitriev",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "concurrently": "^3.1.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "humps": "^2.0.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.15.2",
@@ -23,7 +30,8 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "urlsearchparams": "^0.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

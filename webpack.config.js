@@ -36,5 +36,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './app/app.html'
     })
-  ]
+  ],
+  externals: {
+    config: JSON.stringify(require('./config/config.json').development)
+  }
 };
