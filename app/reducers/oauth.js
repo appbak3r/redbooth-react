@@ -16,13 +16,13 @@ const initialState = {
 export default function oauth (state = initialState, action) {
   switch (action.type) {
     case LOGIN:
-      return state;
+      return { ...state, fetching: true };
     case LOGOUT:
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('expiresIn');
       localStorage.removeItem('expirationDate');
-      return { state, accessToken: null, refreshToken: null, expiresIn: null};
+      return { state, accessToken: null, refreshToken: null, expiresIn: null, fetching: false };
     case GET_TOKEN_REQUEST:
       return { ...state, fetching: true };
     case GET_TOKEN_FAILURE:

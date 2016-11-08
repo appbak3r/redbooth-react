@@ -2,6 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as oauthActions from '../../actions/oauthActions';
+import styles from './styles.sass';
+import cx from "classnames";
 
 class Login extends React.Component {
   constructor () {
@@ -17,24 +19,46 @@ class Login extends React.Component {
   }
 
   onClick () {
-    this.props.login();
+    if (!this.props.fetching) {
+      this.props.login();
+    }
   }
 
   componentWillUpdate (nextProps) {
-    if (nextProps.accessToken){
+    if (nextProps.accessToken) {
       this.props.router.replace('/');
     }
   }
 
-  render () {
-    let template = '';
-    if (this.props.fetching){
-      template = <div>fetching</div>
+  getWelcomeMessage () {
+    const { fetching, accessToken } = this.props;
+    let welcomeMessage = <div>Please sign in</div>;
+
+    if (fetching) {
+      welcomeMessage = <div>Please, wait a moment...</div>
     }
 
-    return <div>
-      <a href="javascript: void(0);" onClick={this.onClick}>Authorize with Redbooth</a>
-      {template}
+    if (accessToken) {
+      welcomeMessage = <div>Redirecting...</div>
+    }
+    return welcomeMessage;
+  }
+
+  render () {
+    const { fetching } = this.props;
+
+    let className = cx(styles.button, {
+      [styles.loading]: fetching
+    });
+
+    return <div className={styles.container}>
+      <div className={styles.centered}>
+        <div className={styles.welcome}>
+          Welcome to Redbooth
+          {this.getWelcomeMessage()}
+        </div>
+        <a href="javascript: void(0);" onClick={this.onClick} className={className}>Authorize with Redbooth</a>
+      </div>
     </div>
   }
 }
