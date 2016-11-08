@@ -19,7 +19,7 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/token', function (req, res) {
+app.post('/token', (req, res) => {
   const url = config.redbooth.tokenURL;
   let params = new URLSearchParams();
 
@@ -38,7 +38,52 @@ app.post('/token', function (req, res) {
     },
     body: params.toString()
   }).then((response) => {
-    if (response.status >= 400){
+    if (response.status >= 400) {
+      return Promise.reject(response);
+    }
+    return response.json();
+  }).then((json) => {
+    res.json(humps.camelizeKeys(json))
+  }).catch(response => {
+    response.json().then(json => {
+      res.status(response.status).json(humps.camelizeKeys(json));
+    })
+  });
+});
+
+app.get('/*', (req, res) => {
+  const url =  config.redbooth.apiURL + req.originalUrl;
+  console.log(url);
+  fetch(url, {
+    method: 'get',
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    body: req.body
+  }).then((response) => {
+    if (response.status >= 400) {
+      return Promise.reject(response);
+    }
+    return response.json();
+  }).then((json) => {
+    res.json(humps.camelizeKeys(json))
+  }).catch(response => {
+    response.json().then(json => {
+      res.status(response.status).json(humps.camelizeKeys(json));
+    })
+  });
+});
+
+app.post('/*', (req, res) => {
+  const url =  config.redbooth.apiURL + req.originalUrl;
+  fetch(url, {
+    method: 'post',
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    body: req.body
+  }).then((response) => {
+    if (response.status >= 400) {
       return Promise.reject(response);
     }
     return response.json();

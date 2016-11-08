@@ -27,8 +27,14 @@ class Login extends React.Component {
   }
 
   render () {
+    let template = '';
+    if (this.props.fetching){
+      template = <div>fetching</div>
+    }
+
     return <div>
       <a href="javascript: void(0);" onClick={this.onClick}>Authorize with Redbooth</a>
+      {template}
     </div>
   }
 }
@@ -36,7 +42,8 @@ class Login extends React.Component {
 Login.propTypes = {
   login: React.PropTypes.func,
   accessToken: React.PropTypes.string,
-  getToken: React.PropTypes.func
+  getToken: React.PropTypes.func,
+  fetching: React.PropTypes.bool
 };
 
 function mapStateToProps (state) {
