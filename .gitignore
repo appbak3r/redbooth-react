@@ -16,3 +16,4 @@ node_modules
 public/*
 dist/*
 !public/favicon.png
+config/config.json
