@@ -1,7 +1,9 @@
 import {
   LOGIN,
-  REFRESH_TOKEN,
   LOGOUT,
+  GET_REFRESH_TOKEN_REQUEST,
+  GET_REFRESH_TOKEN_FAILURE,
+  GET_REFRESH_TOKEN_SUCCESS,
   GET_TOKEN_SUCCESS,
   GET_TOKEN_FAILURE,
   GET_TOKEN_REQUEST
@@ -63,11 +65,41 @@ export function getToken (code) {
   }
 }
 
-export function refreshToken () {
+export function refreshToken (token) {
   return (dispatch) => {
     dispatch({
-      type: REFRESH_TOKEN
-    })
+      type: GET_REFRESH_TOKEN_REQUEST
+    });
+
+    const url = config.redbooth.refreshTokenURL;
+
+    let params = new URLSearchParams();
+    params.append('refresh_token', token);
+
+    fetch(url, {
+      method: 'post',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: params
+    }).then(response => {
+      if (response.status >= 400) {
+        return Promise.reject(response);
+      }
+      return response.json();
+    }).then(json => {
+      dispatch({
+        type: GET_REFRESH_TOKEN_SUCCESS,
+        payload: json
+      })
+    }).catch(response => {
+      response.json().then(json => {
+        dispatch({
+          type: GET_REFRESH_TOKEN_FAILURE,
+          payload: json
+        })
+      });
+    });
   }
 }
 

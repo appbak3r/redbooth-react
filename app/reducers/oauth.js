@@ -3,7 +3,10 @@ import {
   LOGOUT,
   GET_TOKEN_REQUEST,
   GET_TOKEN_FAILURE,
-  GET_TOKEN_SUCCESS
+  GET_TOKEN_SUCCESS,
+  GET_REFRESH_TOKEN_FAILURE,
+  GET_REFRESH_TOKEN_REQUEST,
+  GET_REFRESH_TOKEN_SUCCESS
 } from '../constants/oauth';
 
 const initialState = {
@@ -23,10 +26,13 @@ export default function oauth (state = initialState, action) {
       localStorage.removeItem('expiresIn');
       localStorage.removeItem('expirationDate');
       return { state, accessToken: null, refreshToken: null, expiresIn: null, fetching: false };
+    case GET_REFRESH_TOKEN_REQUEST:
     case GET_TOKEN_REQUEST:
       return { ...state, fetching: true };
+    case GET_REFRESH_TOKEN_FAILURE:
     case GET_TOKEN_FAILURE:
       return { ...state, error: action.payload.error, fetching: false };
+    case GET_REFRESH_TOKEN_SUCCESS:
     case GET_TOKEN_SUCCESS:
       const { accessToken, refreshToken, expiresIn } = action.payload;
       let expirationDate = Date.now() + expiresIn;

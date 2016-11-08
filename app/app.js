@@ -8,7 +8,7 @@ import { makeRoutes } from './routes';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const unRegisterInterceptor = registerInterceptor(store);
+const unRegisterInterceptor = registerInterceptor(store, history);
 
 class App extends React.Component {
   render () {

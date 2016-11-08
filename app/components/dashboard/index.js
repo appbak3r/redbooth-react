@@ -18,19 +18,26 @@ class Dashboard extends React.Component {
     this.props.getProfile();
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { accessToken, getProfile } = this.props;
+    if (accessToken !== nextProps.accessToken) {
+      getProfile();
+    }
+  }
+
   logout () {
     this.props.logout();
     this.props.router.replace('/login');
   }
 
   render () {
-    const {firstName, lastName, photoURL} = this.props;
+    const { firstName, lastName, photoURL } = this.props;
     let fullName = 'Unknown communist';
-    if (firstName && lastName){
-     fullName = `${firstName} ${lastName}`;
+    if (firstName && lastName) {
+      fullName = `${firstName} ${lastName}`;
     }
     let photo = photoURL || DEFAULT_PHOTO_URL;
-    return <Header logout={this.logout} name={fullName} photo={photo}/>
+    return <Header logout={this.logout} name={fullName} photo={photo} />
   }
 }
 
@@ -38,7 +45,8 @@ Dashboard.propTypes = {
   logout: React.PropTypes.func,
   firstName: React.PropTypes.string,
   lastName: React.PropTypes.string,
-  getProfile: React.PropTypes.func
+  getProfile: React.PropTypes.func,
+  accessToken: React.PropTypes.string
 };
 
 function mapStateToProps (state) {

@@ -51,6 +51,39 @@ app.post('/token', (req, res) => {
   });
 });
 
+
+app.post('/refreshToken', (req, res) => {
+  const url = config.redbooth.tokenURL;
+  let params = new URLSearchParams();
+
+  const { redirectURL, clientId, clientSecret } = config.redbooth;
+
+  params.append('client_id', clientId);
+  params.append('client_secret', clientSecret);
+  params.append('refresh_token', req.body.refresh_token);
+  params.append('redirect_uri', redirectURL);
+  params.append('grant_type', 'refresh_token');
+
+  fetch(url, {
+    method: 'post',
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    body: params.toString()
+  }).then((response) => {
+    if (response.status >= 400) {
+      return Promise.reject(response);
+    }
+    return response.json();
+  }).then((json) => {
+    res.json(humps.camelizeKeys(json))
+  }).catch(response => {
+    response.json().then(json => {
+      res.status(response.status).json(humps.camelizeKeys(json));
+    })
+  });
+});
+
 app.get('/*', (req, res) => {
   const url =  config.redbooth.apiURL + req.originalUrl;
   fetch(url, {
