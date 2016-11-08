@@ -1,0 +1,70 @@
+.header
+  background: #ee4b55
+  height: 60px
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, .1)
+  width: 100%
+
+.logo
+  color: #fff
+  text-decoration: none
+  font-weight: bold
+  line-height: 60px
+  padding: 20px
+  font-size: 16px
+  position: relative
+
+  &:after
+    content: ''
+    display: block
+    height: 14px
+    width: 14px
+    position: absolute
+    right: 7px
+    top: 20px
+    background: url('/hammer_and_sickle.svg') no-repeat
+    background-size: cover
+
+.right
+  float: right
+  line-height: 60px
+  position: relative
+
+
+.dropdown
+  color: #fff
+  margin: 0 20px 0 0
+  padding-left: 20px
+  height: 100%
+  border-left: 1px solid rgba(238, 5, 27, 0.44)
+  cursor: default
+
+  &:hover
+    .dropdownList
+      display: block
+
+.dropdownList
+  line-height: 20px
+  position: absolute
+  right: 0
+  top: 100%
+  width: 100%
+  background: #fff
+  display: none
+  text-align: center
+  box-shadow: 0 2px 15px 1px rgba(0,0,0,.2)
+
+  a
+    color: #ee4b55
+    text-decoration: none
+    cursor: pointer
+    text-transform: lowercase
+    padding: 10px
+    display: block
+
+.photo
+  float: left
+  border-radius: 100%
+  width: 36px
+  height: 36px
+  margin-top: 13px
+  margin-right: 10px

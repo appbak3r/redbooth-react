@@ -35,7 +35,7 @@ class Login extends React.Component {
     let welcomeMessage = <div>Please sign in</div>;
 
     if (fetching) {
-      welcomeMessage = <div>Please, wait a moment...</div>
+      welcomeMessage = <div>You are in queue...</div>
     }
 
     if (accessToken) {
@@ -45,19 +45,19 @@ class Login extends React.Component {
   }
 
   render () {
-    const { fetching } = this.props;
+    const { fetching, accessToken } = this.props;
 
     let className = cx(styles.button, {
-      [styles.loading]: fetching
+      [styles.loading]: fetching || (!fetching && accessToken)
     });
 
     return <div className={styles.container}>
       <div className={styles.centered}>
         <div className={styles.welcome}>
-          Welcome to Redbooth
+          Welcome to Redbooth, Comrade!
           {this.getWelcomeMessage()}
         </div>
-        <a href="javascript: void(0);" onClick={this.onClick} className={className}>Authorize with Redbooth</a>
+        <a href="javascript: void(0);" onClick={this.onClick} className={className}>Get voucher to use Redbooth</a>
       </div>
     </div>
   }
