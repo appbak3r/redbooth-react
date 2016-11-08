@@ -6,7 +6,7 @@ const config = require('../config/config.json').server;
 const URLSearchParams = require('urlsearchparams').URLSearchParams;
 const bodyParser = require('body-parser');
 const humps = require('humps');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, function () {
   let { address, port } = this.address();
@@ -53,7 +53,6 @@ app.post('/token', (req, res) => {
 
 app.get('/*', (req, res) => {
   const url =  config.redbooth.apiURL + req.originalUrl;
-  console.log(url);
   fetch(url, {
     method: 'get',
     headers: {

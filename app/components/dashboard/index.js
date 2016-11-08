@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getProfile(this.props.accessToken);
+    this.props.getProfile();
   }
 
   onClick () {
@@ -27,8 +27,7 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   logout: React.PropTypes.func,
-  getProfile: React.PropTypes.func,
-  accessToken: React.PropTypes.string
+  getProfile: React.PropTypes.func
 };
 
 function mapStateToProps (state) {
