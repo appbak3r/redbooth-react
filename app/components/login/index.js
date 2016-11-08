@@ -32,14 +32,15 @@ class Login extends React.Component {
 
   getWelcomeMessage () {
     const { fetching, accessToken } = this.props;
+    const dots = (new Array(3).fill('')).map( (_, idx) => <span className={styles.dot} key={idx}>.</span>);
     let welcomeMessage = <div>Please sign in</div>;
 
     if (fetching) {
-      welcomeMessage = <div>You are in queue...</div>
+      welcomeMessage = <div>You are in queue{dots}</div>
     }
 
     if (accessToken) {
-      welcomeMessage = <div>Redirecting...</div>
+      welcomeMessage = <div>Redirecting{dots}</div>
     }
     return welcomeMessage;
   }

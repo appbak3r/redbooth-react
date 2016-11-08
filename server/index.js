@@ -19,6 +19,21 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+function handleResponseError (response) {
+  return new Promise((resolve)=> {
+    const clonedResponse = response.clone();
+    clonedResponse.json().then(json => {
+      resolve([ clonedResponse.status, humps.camelizeKeys(json) ]);
+    }).catch(_ => {
+      response.text().then(text => {
+        resolve([ response.status, { error: text || response.statusText } ]);
+      }).catch(_ => {
+        resolve([ response.status, { error: response.statusText } ]);
+      });
+    });
+  });
+}
+
 app.post('/token', (req, res) => {
   const url = config.redbooth.tokenURL;
   let params = new URLSearchParams();
@@ -51,7 +66,6 @@ app.post('/token', (req, res) => {
   });
 });
 
-
 app.post('/refreshToken', (req, res) => {
   const url = config.redbooth.tokenURL;
   let params = new URLSearchParams();
@@ -77,15 +91,15 @@ app.post('/refreshToken', (req, res) => {
     return response.json();
   }).then((json) => {
     res.json(humps.camelizeKeys(json))
-  }).catch(response => {
-    response.json().then(json => {
-      res.status(response.status).json(humps.camelizeKeys(json));
-    })
+  }).catch((response)=> {
+    handleResponseError(response).then(([status, json])=> {
+      res.status(status).json(json);
+    });
   });
 });
 
 app.get('/*', (req, res) => {
-  const url =  config.redbooth.apiURL + req.originalUrl;
+  const url = config.redbooth.apiURL + req.originalUrl;
   fetch(url, {
     method: 'get',
     headers: {
@@ -99,15 +113,15 @@ app.get('/*', (req, res) => {
     return response.json();
   }).then((json) => {
     res.json(humps.camelizeKeys(json))
-  }).catch(response => {
-    response.json().then(json => {
-      res.status(response.status).json(humps.camelizeKeys(json));
-    })
+  }).catch((response)=> {
+    handleResponseError(response).then(([status, json])=> {
+      res.status(status).json(json);
+    });
   });
 });
 
 app.post('/*', (req, res) => {
-  const url =  config.redbooth.apiURL + req.originalUrl;
+  const url = config.redbooth.apiURL + req.originalUrl;
   fetch(url, {
     method: 'post',
     headers: {
@@ -121,9 +135,9 @@ app.post('/*', (req, res) => {
     return response.json();
   }).then((json) => {
     res.json(humps.camelizeKeys(json))
-  }).catch(response => {
-    response.json().then(json => {
-      res.status(response.status).json(humps.camelizeKeys(json));
-    })
+  }).catch((response)=> {
+    handleResponseError(response).then(([status, json])=> {
+      res.status(status).json(json);
+    });
   });
 });

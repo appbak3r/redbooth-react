@@ -14,15 +14,18 @@ module.exports = [
   {
     test: /[\/\\]app[\/\\].*\.css$/,
     loaders: [
-      'style?sourceMap',
-      'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
+      "style?sourceMap",
+      "css?importLoaders=1&modules&localIdentName=[path]___[name]__[local]___[hash:base64:5]",
+      "autoprefixer-loader",
     ]
   },
   {
     test: /\.sass$/,
     loaders: [
       "style?sourceMap",
-      "css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]", "sass"
+      "css?importLoaders12&modules&localIdentName=[path]___[name]__[local]___[hash:base64:5]",
+      "autoprefixer-loader",
+      "sass"
     ]
   },
   {
