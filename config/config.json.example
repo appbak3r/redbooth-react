@@ -1,0 +1,21 @@
+{
+  "development": {
+    "redbooth": {
+      "baseURL": "http://localhost:3000/",
+      "tokenURL": "http://localhost:3000/token",
+      "redirectURL": "http://localhost:3001/login",
+      "authURL": "https://redbooth.com/oauth2/authorize",
+      "clientId": "<CLIENT_ID>"
+    }
+  },
+  "server": {
+    "redbooth": {
+      "apiURL": "https://redbooth.com/api/3/",
+      "tokenURL": "https://redbooth.com/oauth2/token",
+      "redirectURL": "http://localhost:3001/login",
+      "authURL": "https://redbooth.com/oauth2/authorize",
+      "clientId": "<CLIENT_ID>",
+      "clientSecret": "<CLIENT_SECRET>"
+    }
+  }
+}
