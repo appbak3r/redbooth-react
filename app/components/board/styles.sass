@@ -1,0 +1,38 @@
+.container
+  margin: 15px 10px
+  padding: 10px 15px
+
+.title
+  font-weight: bold
+  font-size: 16px
+  color: #777
+  margin-bottom: 15px
+
+.list
+  display: flex
+  justify-content: flex-start
+  overflow: auto
+  height: 100%
+  padding-bottom: 50px
+
+
+.preloader
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  color: #777
+  font-size: 16px
+  z-index: 999
+
+  .dot
+    animation: blink 1s infinite
+    &:nth-child(2)
+      animation-delay: 250ms
+    &:nth-child(3)
+      animation-delay: 500ms
+
+
+@keyframes blink
+  50%
+    color: transparent

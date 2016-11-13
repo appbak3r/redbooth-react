@@ -7,7 +7,6 @@ import * as oauthActions from '../../actions/oauthActions';
 import * as profileActions from '../../actions/profileActions';
 import * as projectsActions from '../../actions/projectsActions';
 import Header from '../header';
-import BoardList from '../board-list';
 
 const DEFAULT_PHOTO_URL = '/profile.png';
 
@@ -74,7 +73,7 @@ Main.propTypes = {
 };
 
 function mapStateToProps (state) {
-  return { ...state.oauth, ...state.profile, ...state.projects };
+  return { ...state.oauth, ...state.profile, ...state.projects};
 }
 
 function mapDispatchToProps (dispatch) {

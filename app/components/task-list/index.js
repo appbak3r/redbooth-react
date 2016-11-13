@@ -1,9 +1,15 @@
 import React from 'react';
+import styles from './styles.sass';
 
 class TaskList extends React.Component {
- render(){
-   return <div>Task list</div>
- }
+  render () {
+    const { name } = this.props;
+    return <div className={styles.list}>{name}</div>
+  }
 }
+
+TaskList.propTypes = {
+  name: React.PropTypes.string
+};
 
 export default TaskList;

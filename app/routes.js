@@ -4,7 +4,7 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import Container from './containers/container';
 import Dashboard from './components/dashboard';
 import Main from './components/main';
-import TaskList from './components/task-list';
+import Board from './components/board';
 import Login from './components/login';
 import ErrorComponent from './components/error';
 
@@ -21,7 +21,7 @@ export const routes = {
   },
   boards: {
     path: '/boards/:id',
-    component: TaskList
+    component: Board
   },
   login: {
     path: '/login',
