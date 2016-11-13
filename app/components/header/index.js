@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 class Header extends React.Component {
   render () {
-    const { name, logout, photo } = this.props;
+    const { name, logout, photo, children } = this.props;
 
     return <div className={styles.header}>
       <Link to='/' className={styles.logo}>Redbooth</Link>
@@ -18,6 +18,7 @@ class Header extends React.Component {
           </div>
         </div>
       </div>
+      {children}
     </div>
   }
 }
@@ -25,7 +26,8 @@ class Header extends React.Component {
 Header.propTypes = {
   logout: React.PropTypes.func,
   name: React.PropTypes.string,
-  photo: React.PropTypes.string
+  photo: React.PropTypes.string,
+  children: React.PropTypes.object
 };
 
 export default Header;
